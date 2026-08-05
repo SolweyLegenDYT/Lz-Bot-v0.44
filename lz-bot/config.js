@@ -4,7 +4,7 @@ module.exports = {
   // ──────────────────────────────────────────
   //  BOT IDENTITY
   // ──────────────────────────────────────────
-  botName: process.env.BOT_NAME || 'LZ BOT',
+  botName: process.env.BOT_NAME || 'Lz BOT',
   botVersion: '1.0.0',
   prefix: process.env.PREFIX || '.',
   language: process.env.LANGUAGE || 'es',
@@ -12,9 +12,9 @@ module.exports = {
   // ──────────────────────────────────────────
   //  OWNER / DEVELOPER
   // ──────────────────────────────────────────
-  // Format: "5219999999999" (country code + number, no + or spaces)
+  // Format: "31629049445" (country code + number, no + or spaces)
   ownerNumber: process.env.OWNER_NUMBER || '',
-  ownerName: process.env.OWNER_NAME || 'Developer',
+  ownerName: process.env.OWNER_NAME || 'LzSunshNe',
 
   // ──────────────────────────────────────────
   //  SESSION
@@ -93,8 +93,8 @@ module.exports = {
   // ──────────────────────────────────────────
   //  STICKER CONFIG
   // ──────────────────────────────────────────
-  stickerAuthor: process.env.STICKER_AUTHOR || 'LZ BOT',
-  stickerPack: process.env.STICKER_PACK || 'LZ BOT Pack',
+  stickerAuthor: process.env.STICKER_AUTHOR || 'Lz Bot',
+  stickerPack: process.env.STICKER_PACK || 'Lz 🐿️ᴀͨʀͧᴅᷞɪͦʟᷠʟᷧᴀ',
 
   // ──────────────────────────────────────────
   //  LEVELS
