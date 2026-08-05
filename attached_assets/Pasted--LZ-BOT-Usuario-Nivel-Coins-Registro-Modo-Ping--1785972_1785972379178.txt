@@ -1,0 +1,483 @@
+╭━━〔 🤖 LZ BOT 〕━━⬣
+┃👤 Usuario:
+┃⭐ Nivel:
+┃💰 Coins:
+┃📅 Registro:
+┃🏷️ Modo:
+┃⚡ Ping:
+╰━━━━━━━━━━━━━━⬣
+
+📜 COMANDOS
+
+.menu
+.help
+.register
+.profile
+.ping
+.runtime
+.owner
+.rules
+.info
+SISTEMA DE REGISTRO
+
+Solo puede registrarse una vez.
+
+Ejemplo
+
+.register Lz/22
+
+Formato
+
+.register Nombre/Edad
+
+Respuesta
+
+Registro completado.
+
+Nombre:
+Lz
+
+Edad:
+22
+
+Bienvenido a LZ BOT
+
+Guardar
+
+Nombre
+Edad
+Fecha
+ID
+Coins
+XP
+Nivel
+IA
+
+Comandos
+
+.ai
+.chat
+.gpt
+.ask
+.code
+.translate
+.summarize
+.imageprompt
+
+Ejemplos
+
+.ai Hola
+
+.chat Explícame JavaScript
+
+.translate Hola al inglés
+
+.code Haz un script Roblox
+
+.summarize texto
+
+.imageprompt crea un dragón futurista
+DESCARGAS
+
+YouTube
+
+.play
+.ytmp3
+.ytmp4
+.video
+.audio
+
+Spotify
+
+.spotify
+
+.spotifydl
+
+TikTok
+
+.tiktok
+
+.tt
+
+Instagram
+
+.ig
+
+Facebook
+
+.fb
+
+Pinterest
+
+.pin
+
+MediaFire
+
+.mediafire
+
+GitHub
+
+.github
+STICKERS
+.s
+.sticker
+.toimg
+.webp
+.attp
+.qc
+.brat
+.emojimix
+.take
+
+Funciones
+
+Imagen → Sticker
+Video → Sticker
+GIF → Sticker
+Cambiar packname
+Cambiar autor
+Sticker circular
+Sticker HD
+EDICIÓN DE IMÁGENES
+.removebg
+.upscale
+.hd
+.blur
+.pixel
+.cartoon
+.anime
+.sketch
+.invert
+.brightness
+.contrast
+.resize
+.crop
+.rotate
+EDICIÓN DE AUDIO
+.bass
+.reverb
+.fast
+.slow
+.reverse
+.robot
+.nightcore
+.deep
+HERRAMIENTAS
+.qr
+.readqr
+.calc
+.weather
+.news
+.time
+.date
+.password
+.shorturl
+.translate
+UTILIDADES
+.ping
+.runtime
+.speed
+.server
+.owner
+PERFIL
+.profile
+.level
+.rank
+.balance
+.daily
+.weekly
+ECONOMÍA
+.work
+
+.mine
+
+.hunt
+
+.daily
+
+.weekly
+
+.transfer
+
+.shop
+
+.buy
+
+.sell
+NIVELES
+
+Sistema XP
+
+mensajes
+comandos
+actividad
+
+Cada nivel desbloquea recompensas.
+
+JUEGOS
+.slot
+
+.coinflip
+
+.math
+
+.quiz
+
+.word
+
+.hangman
+
+.trivia
+
+.akinator
+
+.tictactoe
+BÚSQUEDAS
+.google
+
+.youtube
+
+.wikipedia
+
+.anime
+
+.manga
+
+.github
+
+.npm
+GRUPOS
+
+Solo administradores
+
+.tagall
+
+.hidetag
+
+.kick
+
+.add
+
+.promote
+
+.demote
+
+.open
+
+.close
+
+.link
+
+.resetlink
+
+.invite
+
+.delete
+
+.warn
+
+.unwarn
+
+.mute
+
+.unmute
+MODERACIÓN
+.antilink on
+
+.antibot on
+
+.antiarab on
+
+.antispam on
+
+.antilongtext on
+
+.antisticker on
+
+.antidelete on
+
+.antifake on
+
+.antilinkgc on
+BIENVENIDA
+.welcome on
+
+.goodbye on
+
+.setwelcome
+
+.setbye
+AUTOMÁTICOS
+Auto responder
+Auto sticker
+Auto reaccionar
+Auto traducir
+Auto IA
+Auto bienvenida
+Auto despedida
+CONFIGURACIÓN
+.prefix
+
+.language
+
+.autoread
+
+.autotyping
+
+.autorecord
+
+.autostatus
+
+.mode
+OWNER
+.owner
+
+.creator
+
+.sc
+
+.donate
+MENÚ DEL CREADOR
+
+Solo el número del creador puede usar estos comandos.
+
+╭━━〔 👑 CREATOR PANEL 〕━━⬣
+
+.addowner
+
+.delowner
+
+.ban
+
+.unban
+
+.block
+
+.unblock
+
+.broadcast
+
+.restart
+
+.shutdown
+
+.update
+
+.eval
+
+.exec
+
+.shell
+
+.getfile
+
+.setppbot
+
+.setname
+
+.setbio
+
+.join
+
+.leave
+
+.clear
+
+.clearsession
+
+.backup
+
+.restore
+
+.setprefix
+
+.setwelcome
+
+.autoupdate
+
+.mode
+
+.blacklist
+
+.whitelist
+
+.getdb
+
+.resetuser
+
+.givecoins
+
+.givexp
+
+.givelevel
+
+.resetdb
+
+.logs
+
+.memory
+
+.cpu
+
+.disk
+
+.plugins
+
+.reload
+
+.install
+
+.uninstall
+
+.listplugins
+
+╰━━━━━━━━━━━━━━━━━━⬣
+SISTEMA DE PLUGINS
+plugins/
+
+download.js
+
+games.js
+
+ai.js
+
+owner.js
+
+group.js
+
+tools.js
+
+sticker.js
+
+economy.js
+
+fun.js
+
+Cada comando debe ser independiente.
+
+BASE DE DATOS
+
+Guardar:
+
+Usuario
+Nombre
+Edad
+XP
+Nivel
+Coins
+Premium
+Ban
+Warns
+Fecha registro
+Grupo
+Configuración
+SEGURIDAD
+Anti Crash
+Anti Spam
+Anti Flood
+Rate Limit
+Cooldowns
+Validación de permisos
+Protección contra mensajes maliciosos
+Reconexión automática
+Manejo de errores sin detener el bot

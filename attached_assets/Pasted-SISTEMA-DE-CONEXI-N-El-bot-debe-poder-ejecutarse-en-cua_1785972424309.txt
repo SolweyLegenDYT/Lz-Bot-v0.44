@@ -1,0 +1,146 @@
+SISTEMA DE CONEXIÓN
+
+El bot debe poder ejecutarse en cualquier hosting (Render, Railway, VPS, Replit, Pterodactyl, Docker, Ubuntu, Windows o Termux).
+
+Debe permitir dos métodos de vinculación de WhatsApp.
+
+Método 1 - Código QR
+
+Al iniciar el bot debe generar automáticamente un código QR en la consola y, si existe una interfaz web, mostrarlo también.
+
+El usuario solo debe escanear el QR desde:
+
+WhatsApp
+↓
+
+Dispositivos vinculados
+
+↓
+
+Vincular un dispositivo
+
+Una vez escaneado, la sesión debe guardarse automáticamente para evitar volver a escanear el QR en futuros reinicios.
+
+Método 2 - Código de Vinculación (Pairing Code)
+
+Si el usuario no desea usar QR, podrá iniciar el bot escribiendo un número de teléfono.
+
+Ejemplo:
+
+Ingresa tu número
+
++51999999999
+
+El bot generará automáticamente un código de 8 dígitos.
+
+Ejemplo:
+
+ABCD-1234
+
+Ese código se introduce en:
+
+WhatsApp
+
+↓
+
+Dispositivos vinculados
+
+↓
+
+Vincular con número de teléfono
+
+Una vez vinculado, la sesión también debe guardarse automáticamente.
+
+PANEL DE CONEXIÓN
+
+Al iniciar el bot debe aparecer un menú como:
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+         LZ BOT
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+[1] Conectar mediante QR
+
+[2] Conectar mediante Código
+
+Seleccione una opción:
+SESIONES
+
+El bot debe:
+
+Guardar sesiones automáticamente.
+Detectar sesiones dañadas.
+Repararlas si es posible.
+Eliminar sesiones corruptas.
+Reconectarse automáticamente.
+No solicitar nuevamente QR si la sesión sigue siendo válida.
+Permitir cerrar sesión desde un comando exclusivo del creador.
+MODO OPERADOR
+
+El propietario del número que vincula el bot será automáticamente el Operador Principal.
+
+Los operadores tendrán acceso a la administración del bot sin necesidad de modificar archivos.
+
+Podrán usar comandos como:
+
+.addowner
+
+.delowner
+
+.listowner
+
+.operator
+
+.panel
+
+.restart
+
+.broadcast
+
+.ban
+
+.unban
+
+.join
+
+.leave
+
+.logs
+
+.backup
+RESTRICCIONES DEL OPERADOR
+
+Aunque un operador tenga permisos administrativos, NO podrá modificar la identidad de la cuenta de WhatsApp vinculada.
+
+Queda prohibido mediante comandos:
+
+Cambiar la foto del perfil del bot.
+Cambiar el nombre del perfil.
+Cambiar el estado o biografía.
+Cambiar el número vinculado.
+Eliminar la sesión principal.
+Transferir la propiedad del bot.
+Acceder a credenciales o archivos sensibles de autenticación.
+
+Los comandos como:
+
+.setppbot
+
+.setname
+
+.setbio
+
+deben estar deshabilitados por defecto o restringidos únicamente si el desarrollador decide habilitarlos manualmente desde la configuración.
+
+SEGURIDAD
+
+Implementar un sistema de permisos por niveles:
+
+Usuario: comandos básicos.
+Administrador de grupo: moderación del grupo.
+Operador: administración del bot, plugins, reinicios, copias de seguridad, difusión y configuración.
+Desarrollador (Developer): acceso total al código, consola, archivos, ejecución de scripts (eval, exec, shell) y gestión completa del sistema.
+
+Cada comando debe verificar automáticamente el nivel de permisos antes de ejecutarse.
