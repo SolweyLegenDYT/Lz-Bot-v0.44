@@ -139,7 +139,18 @@ if [ -n "$owner_name" ]; then
   ok "Nombre del dueño: $owner_name"
 fi
 
-# ── 7. Resumen final ────────────────────────────
+# ── 7. Crear comando 'lzbot' para iniciar fácil ─
+step "Creando comando 'lzbot'..."
+
+LZBOT_CMD="$PREFIX/bin/lzbot"
+cat > "$LZBOT_CMD" << SCRIPT
+#!/data/data/com.termux/files/usr/bin/bash
+cd "$BOT_DIR/lz-bot" && npm start
+SCRIPT
+chmod +x "$LZBOT_CMD"
+ok "Comando 'lzbot' creado — escribe 'lzbot' en cualquier parte para iniciar el bot"
+
+# ── 8. Resumen final ────────────────────────────
 echo ""
 echo -e "${GREEN}"
 echo "  ════════════════════════════════════════════"
@@ -148,31 +159,36 @@ echo "  ════════════════════════
 echo -e "${NC}"
 echo -e "${WHITE}  📂 Ruta del bot:${NC} $BOT_DIR/lz-bot"
 echo ""
-echo -e "${WHITE}  ▶  Para iniciar el bot:${NC}"
-echo -e "     ${CYAN}cd ~/Lz-Bot-v0.44/lz-bot && npm start${NC}"
+echo -e "${WHITE}  ▶  Para iniciar el bot (desde cualquier parte):${NC}"
+echo -e "     ${CYAN}lzbot${NC}"
 echo ""
 echo -e "${WHITE}  📷  Al iniciar, elige la opción [1] para QR${NC}"
 echo -e "${WHITE}     y escanéalo desde WhatsApp →${NC}"
 echo -e "${WHITE}     Dispositivos vinculados → Vincular dispositivo${NC}"
 echo ""
+echo -e "${WHITE}  📲  ¿QR difícil de escanear? Elige [2] para código${NC}"
+echo -e "${WHITE}     de vinculación — ingresa tu número y WhatsApp${NC}"
+echo -e "${WHITE}     te da un código de 8 dígitos${NC}"
+echo ""
 echo -e "${WHITE}  ✏️  Para editar configuración:${NC}"
-echo -e "     ${CYAN}nano ~/Lz-Bot-v0.44/lz-bot/.env${NC}"
+echo -e "     ${CYAN}nano $BOT_DIR/lz-bot/.env${NC}"
 echo ""
 echo -e "${WHITE}  🔄  Para mantener el bot activo en segundo plano:${NC}"
-echo -e "     ${CYAN}pkg install screen${NC}"
+echo -e "     ${CYAN}pkg install screen -y${NC}"
 echo -e "     ${CYAN}screen -S lzbot${NC}"
-echo -e "     ${CYAN}npm start${NC}"
-echo -e "     ${YELLOW}(luego Ctrl+A y D para desconectarte del screen)${NC}"
+echo -e "     ${CYAN}lzbot${NC}"
+echo -e "     ${YELLOW}(luego presiona Ctrl+A y después D para salir sin detener el bot)${NC}"
+echo -e "     ${YELLOW}Para volver: screen -r lzbot${NC}"
 echo ""
 
-# ── 8. Preguntar si iniciar ahora ───────────────
+# ── 9. Preguntar si iniciar ahora ───────────────
 echo -e "${CYAN}¿Iniciar el bot ahora para escanear el QR? [s/n]:${NC} "
 read -r start_now
 if [[ "$start_now" =~ ^[ssSy]$ ]]; then
   echo ""
   echo -e "${GREEN}  Iniciando LZ BOT...${NC}"
-  echo -e "${YELLOW}  Selecciona [1] para escanear QR o [2] para código de vinculación${NC}"
+  echo -e "${YELLOW}  → Escribe 1 para QR  |  2 para código de vinculación${NC}"
   echo ""
   sleep 2
-  npm start
+  cd "$BOT_DIR/lz-bot" && npm start
 fi

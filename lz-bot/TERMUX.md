@@ -14,10 +14,16 @@ curl -sSL https://raw.githubusercontent.com/SolweyLegenDYT/Lz-Bot-v0.44/main/lz-
 
 El script hace todo automáticamente:
 - ✅ Instala Node.js, Git y FFmpeg
-- ✅ Clona el repositorio
+- ✅ Clona el repositorio en `~/Lz-Bot-v0.44`
 - ✅ Instala las dependencias npm
 - ✅ Te pide tu número y nombre para configurar `.env`
+- ✅ Crea el comando `lzbot` para iniciar el bot desde cualquier parte
 - ✅ Pregunta si quieres iniciar el bot al finalizar
+
+Después de instalar, para iniciar el bot **siempre usa**:
+```bash
+lzbot
+```
 
 ---
 
@@ -35,9 +41,12 @@ pkg install nodejs git ffmpeg -y
 ### Paso 2 — Clonar el repositorio
 
 ```bash
+cd ~
 git clone https://github.com/SolweyLegenDYT/Lz-Bot-v0.44.git
-cd Lz-Bot-v0.44/lz-bot
+cd ~/Lz-Bot-v0.44/lz-bot
 ```
+
+> ⚠️ Siempre usa `~/` al principio para que funcione sin importar en qué carpeta estés.
 
 ### Paso 3 — Instalar dependencias
 
@@ -129,6 +138,27 @@ cd ~/Lz-Bot-v0.44/lz-bot && npm start
 
 # Volver a ver el bot cuando quieras
 screen -r lzbot
+```
+
+---
+
+## ❓ Error: "No such file or directory"
+
+Si ves este error al hacer `cd`:
+```
+bash: cd: Lz-Bot-v0.44/lz-bot: No such file or directory
+```
+
+La causa es que estás en una carpeta diferente al home. Solución — **siempre usa la ruta completa con `~/`**:
+
+```bash
+cd ~/Lz-Bot-v0.44/lz-bot
+npm start
+```
+
+O más fácil, si ya usaste el script de instalación:
+```bash
+lzbot
 ```
 
 ---
