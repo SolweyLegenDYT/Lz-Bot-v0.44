@@ -186,12 +186,16 @@ lzbot
 ## 🔁 Actualizar el bot
 
 ```bash
-cd ~/Lz-Bot-v0.44
-git pull origin main
-cd lz-bot
-npm install
-npm start
+cd ~/Lz-Bot-v0.44 && git pull origin main && lzbot
 ```
+
+> Si ya tenías el bot instalado y el `.env` tiene `PREFIX=.`, cámbialo a `BOT_PREFIX=.`:
+> ```bash
+> nano ~/Lz-Bot-v0.44/lz-bot/.env
+> # Cambia:  PREFIX=.
+> # Por:     BOT_PREFIX=.
+> ```
+> Esto es necesario porque Termux ya usa `$PREFIX` como variable del sistema.
 
 ---
 

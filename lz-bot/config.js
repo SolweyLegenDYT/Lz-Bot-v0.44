@@ -6,7 +6,8 @@ module.exports = {
   // ──────────────────────────────────────────
   botName: process.env.BOT_NAME || 'Lz BOT',
   botVersion: '1.0.0',
-  prefix: process.env.PREFIX || '.',
+  // Usamos BOT_PREFIX (no PREFIX) para evitar conflicto con la variable $PREFIX de Termux
+  prefix: process.env.BOT_PREFIX || '.',
   language: process.env.LANGUAGE || 'es',
 
   // ──────────────────────────────────────────
