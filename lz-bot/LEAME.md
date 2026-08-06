@@ -247,11 +247,25 @@ lz-bot/
 
 ---
 
+## 📱 Instalar en Termux (Android) — 1 solo comando
+
+Abre Termux y pega esto:
+
+```bash
+curl -sSL https://raw.githubusercontent.com/SolweyLegenDYT/Lz-Bot-v0.44/main/lz-bot/termux-install.sh | bash
+```
+
+El script instala Node.js, Git y FFmpeg, clona el repo, configura tu número y te pregunta si quieres iniciar el bot al terminar.
+
+📖 **Guía completa con solución de problemas → [TERMUX.md](TERMUX.md)**
+
+---
+
 ## 🌐 Cómo hacer hosting
 
 | Plataforma | Comando |
 |---|---|
-| **Termux (Android)** | `node index.js` |
+| **Termux (Android)** | `bash termux-install.sh` |
 | **VPS Ubuntu** | `pm2 start index.js --name lz-bot` |
 | **Render / Railway** | `npm start` |
 | **Pterodactyl** | Node.js egg, startup: `node index.js` |
