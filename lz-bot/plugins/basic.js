@@ -23,7 +23,7 @@ module.exports = {
         const level = user ? user.level : 1;
         const coins = user ? user.coins : 0;
 
-        const menu = `╭━━〔 🤖 *${config.botName}* 〕━━⬣
+        const menuText = `╭━━〔 🤖 *${config.botName}* 〕━━⬣
 ┃👤 Usuario: ${user ? user.name : 'Sin registrar'}
 ┃⭐ Nivel: ${level}
 ┃💰 Coins: ${coins.toLocaleString()}
@@ -43,8 +43,9 @@ ${config.prefix}ai | ${config.prefix}chat | ${config.prefix}translate
 ${config.prefix}code | ${config.prefix}summarize | ${config.prefix}imageprompt
 
 📥 *Descargas*
-${config.prefix}ytmp3 | ${config.prefix}ytmp4 | ${config.prefix}spotify
-${config.prefix}tiktok | ${config.prefix}ig | ${config.prefix}fb
+${config.prefix}ytmp3 <búsqueda> | ${config.prefix}ytmp4 <búsqueda>
+${config.prefix}tiktok <url> | ${config.prefix}ig <url> | ${config.prefix}fb <url>
+${config.prefix}spotify <canción> | ${config.prefix}pin <url>
 
 🎭 *Stickers*
 ${config.prefix}s | ${config.prefix}toimg | ${config.prefix}attp | ${config.prefix}brat
@@ -58,7 +59,7 @@ ${config.prefix}bass | ${config.prefix}reverb | ${config.prefix}nightcore | ${co
 
 🔧 *Herramientas*
 ${config.prefix}qr | ${config.prefix}calc | ${config.prefix}weather
-${config.prefix}translate | ${config.prefix}shorturl | ${config.prefix}password
+${config.prefix}shorturl | ${config.prefix}password | ${config.prefix}date
 
 💰 *Economía*
 ${config.prefix}balance | ${config.prefix}daily | ${config.prefix}work
@@ -66,7 +67,7 @@ ${config.prefix}mine | ${config.prefix}hunt | ${config.prefix}shop | ${config.pr
 
 🎮 *Juegos*
 ${config.prefix}slot | ${config.prefix}coinflip | ${config.prefix}quiz
-${config.prefix}hangman | ${config.prefix}tictactoe | ${config.prefix}trivia
+${config.prefix}hangman | ${config.prefix}tictactoe | ${config.prefix}math
 
 👥 *Grupos* _(solo admins)_
 ${config.prefix}tagall | ${config.prefix}kick | ${config.prefix}add
@@ -78,7 +79,25 @@ ${config.prefix}welcome | ${config.prefix}goodbye
 
 > _Usa *${config.prefix}info* para más detalles_`;
 
-        await sock.sendMessage(msg.key.remoteJid, { text: menu }, { quoted: msg });
+        // Si hay imagen de menú configurada, enviarla con el menú como caption
+        if (config.menuImage && config.menuImage.startsWith('http')) {
+          try {
+            const axios = require('axios');
+            const imgRes = await axios.get(config.menuImage, {
+              responseType: 'arraybuffer',
+              timeout: 15000,
+              headers: { 'User-Agent': 'Mozilla/5.0' }
+            });
+            await sock.sendMessage(msg.key.remoteJid, {
+              image: Buffer.from(imgRes.data),
+              caption: menuText
+            }, { quoted: msg });
+            return;
+          } catch (e) {
+            // Si la imagen falla, manda solo texto
+          }
+        }
+        await sock.sendMessage(msg.key.remoteJid, { text: menuText }, { quoted: msg });
       }
     },
 

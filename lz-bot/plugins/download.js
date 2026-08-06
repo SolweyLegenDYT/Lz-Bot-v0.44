@@ -2,7 +2,48 @@ const axios = require('axios');
 const config = require('../config');
 const { checkCooldown, setCooldown, formatCooldown } = require('../lib/security');
 
-const DL_COOLDOWN = 15000; // 15 seconds
+const DL_COOLDOWN = 20000; // 20 seconds
+
+// ── Búsqueda YouTube via scraping ligero ──────
+async function searchYoutube(query) {
+  // Usa la API pública de sugerencias de YouTube para obtener el primer resultado
+  const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+  const res = await axios.get(searchUrl, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36',
+      'Accept-Language': 'es-ES,es;q=0.9'
+    },
+    timeout: 10000
+  });
+  const html = res.data;
+  // Extrae el primer videoId del JSON embebido en la página
+  const match = html.match(/"videoId":"([a-zA-Z0-9_-]{11})"/);
+  if (!match) return null;
+  const vidId = match[1];
+  // Extrae título si es posible
+  const titleMatch = html.match(/"title":{"runs":\[{"text":"([^"]+)"}/);
+  const title = titleMatch ? titleMatch[1] : query;
+  return { videoId: vidId, title, url: `https://youtube.com/watch?v=${vidId}` };
+}
+
+// ── Descarga via Cobalt API (servicio gratuito) ─
+async function cobaltDownload(youtubeUrl, audioOnly = false) {
+  const payload = {
+    url: youtubeUrl,
+    downloadMode: audioOnly ? 'audio' : 'auto',
+    audioFormat: 'mp3',
+    filenameStyle: 'basic',
+    videoQuality: '720'
+  };
+  const res = await axios.post('https://api.cobalt.tools/', payload, {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    timeout: 20000
+  });
+  return res.data; // { status, url, filename }
+}
 
 module.exports = {
   name: 'download',
@@ -16,9 +57,48 @@ module.exports = {
         setCooldown(sender, 'dl', DL_COOLDOWN);
 
         const query = match[2].trim();
-        await sock.sendMessage(msg.key.remoteJid, {
-          text: `🎵 *YouTube MP3*\n\nBuscando: "${query}"...\n\n⚠️ Esta función requiere una API de descarga (yt-dlp o API pública).\nInstala *yt-dlp* en el servidor para activarla.\n\nComando: \`yt-dlp -x --audio-format mp3 "ytsearch1:${query}"\``
-        }, { quoted: msg });
+        const isUrl = query.startsWith('http');
+
+        await sock.sendMessage(msg.key.remoteJid, { text: `🔍 _Buscando "${query}"..._` }, { quoted: msg });
+
+        try {
+          let videoUrl = query;
+          let videoTitle = query;
+
+          if (!isUrl) {
+            const result = await searchYoutube(query);
+            if (!result) throw new Error('No se encontró el video en YouTube');
+            videoUrl = result.url;
+            videoTitle = result.title;
+            await sock.sendMessage(msg.key.remoteJid, { text: `🎵 Encontrado: *${videoTitle}*\n⏳ _Descargando audio..._` }, { quoted: msg });
+          }
+
+          const cobalt = await cobaltDownload(videoUrl, true);
+
+          if (!cobalt.url) throw new Error('No se pudo obtener el enlace de descarga');
+
+          const audioRes = await axios.get(cobalt.url, {
+            responseType: 'arraybuffer',
+            timeout: 60000,
+            headers: { 'User-Agent': 'Mozilla/5.0' },
+            maxContentLength: 50 * 1024 * 1024 // máx 50 MB
+          });
+
+          await sock.sendMessage(msg.key.remoteJid, {
+            audio: Buffer.from(audioRes.data),
+            mimetype: 'audio/mpeg',
+            ptt: false
+          }, { quoted: msg });
+
+          await sock.sendMessage(msg.key.remoteJid, {
+            text: `✅ *${videoTitle}*\n🔗 ${videoUrl}`
+          }, { quoted: msg });
+
+        } catch (e) {
+          await sock.sendMessage(msg.key.remoteJid, {
+            text: `❌ *No se pudo descargar el audio*\n\n${e.message}\n\n💡 _Intenta con la URL directa de YouTube_`
+          }, { quoted: msg });
+        }
       }
     },
 
@@ -31,9 +111,44 @@ module.exports = {
         setCooldown(sender, 'dl', DL_COOLDOWN);
 
         const query = match[2].trim();
-        await sock.sendMessage(msg.key.remoteJid, {
-          text: `🎬 *YouTube MP4*\n\nBuscando: "${query}"...\n\n⚠️ Esta función requiere *yt-dlp* instalado en el servidor.\nEjecuta: \`yt-dlp "ytsearch1:${query}" -f best\``
-        }, { quoted: msg });
+        const isUrl = query.startsWith('http');
+
+        await sock.sendMessage(msg.key.remoteJid, { text: `🔍 _Buscando "${query}"..._` }, { quoted: msg });
+
+        try {
+          let videoUrl = query;
+          let videoTitle = query;
+
+          if (!isUrl) {
+            const result = await searchYoutube(query);
+            if (!result) throw new Error('No se encontró el video en YouTube');
+            videoUrl = result.url;
+            videoTitle = result.title;
+            await sock.sendMessage(msg.key.remoteJid, { text: `🎬 Encontrado: *${videoTitle}*\n⏳ _Descargando video (720p)..._` }, { quoted: msg });
+          }
+
+          const cobalt = await cobaltDownload(videoUrl, false);
+
+          if (!cobalt.url) throw new Error('No se pudo obtener el enlace de descarga');
+
+          const videoRes = await axios.get(cobalt.url, {
+            responseType: 'arraybuffer',
+            timeout: 90000,
+            headers: { 'User-Agent': 'Mozilla/5.0' },
+            maxContentLength: 100 * 1024 * 1024 // máx 100 MB
+          });
+
+          await sock.sendMessage(msg.key.remoteJid, {
+            video: Buffer.from(videoRes.data),
+            caption: `🎬 *${videoTitle}*\n🔗 ${videoUrl}`,
+            mimetype: 'video/mp4'
+          }, { quoted: msg });
+
+        } catch (e) {
+          await sock.sendMessage(msg.key.remoteJid, {
+            text: `❌ *No se pudo descargar el video*\n\n${e.message}\n\n💡 _Intenta con la URL directa de YouTube o usa ${config.prefix}ytmp3 para solo audio_`
+          }, { quoted: msg });
+        }
       }
     },
 

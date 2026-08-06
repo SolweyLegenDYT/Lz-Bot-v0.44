@@ -10,6 +10,14 @@ module.exports = {
   language: process.env.LANGUAGE || 'es',
 
   // ──────────────────────────────────────────
+  //  MENU IMAGE
+  //  Pon la URL directa de tu imagen aquí o en .env
+  //  Debe ser una URL pública directa (no Google Photos privado)
+  //  Ejemplo: https://i.imgur.com/XXXXX.png
+  // ──────────────────────────────────────────
+  menuImage: process.env.MENU_IMAGE_URL || '',
+
+  // ──────────────────────────────────────────
   //  OWNER / DEVELOPER
   // ──────────────────────────────────────────
   // Format: "31629049445" (country code + number, no + or spaces)
