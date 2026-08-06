@@ -15,7 +15,7 @@ module.exports = {
   //  Debe ser una URL pública directa (no Google Photos privado)
   //  Ejemplo: https://i.imgur.com/XXXXX.png
   // ──────────────────────────────────────────
-  menuImage: process.env.MENU_IMAGE_URL || '',
+  menuImage: process.env.MENU_IMAGE_URL || 'https://i.imgur.com/pOBRL8d.jpeg',
 
   // ──────────────────────────────────────────
   //  OWNER / DEVELOPER
