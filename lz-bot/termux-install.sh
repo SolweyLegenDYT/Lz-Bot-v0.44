@@ -86,13 +86,24 @@ cd "$BOT_DIR/lz-bot" || { err "No se encontró la carpeta lz-bot"; exit 1; }
 
 # ── 5. Instalar dependencias de Node.js ─────────
 step "Instalando dependencias de Node.js (npm install)..."
-echo -e "   ${YELLOW}Esto puede tardar varios minutos...${NC}"
-npm install --legacy-peer-deps 2>/dev/null || npm install
-if [ $? -ne 0 ]; then
-  err "Error al instalar dependencias. Intenta ejecutar npm install manualmente."
+echo -e "   ${YELLOW}Esto puede tardar 5-10 minutos la primera vez. No cierres Termux.${NC}"
+
+npm install 2>&1
+NPM_EXIT=$?
+
+# Verificar que los módulos críticos existan
+if [ $NPM_EXIT -ne 0 ] || [ ! -d "node_modules" ] || [ ! -d "node_modules/dotenv" ]; then
+  warn "Primer intento falló. Reintentando con --legacy-peer-deps..."
+  npm install --legacy-peer-deps 2>&1
+  NPM_EXIT=$?
+fi
+
+if [ ! -d "node_modules/dotenv" ]; then
+  err "Las dependencias no se instalaron correctamente."
+  err "Ejecuta manualmente: cd ~/Lz-Bot-v0.44/lz-bot && npm install"
   exit 1
 fi
-ok "Dependencias instaladas"
+ok "Dependencias instaladas correctamente"
 
 # ── 6. Configurar .env ──────────────────────────
 step "Configurando el bot..."

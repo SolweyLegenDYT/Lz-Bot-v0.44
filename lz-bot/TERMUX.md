@@ -142,6 +142,26 @@ screen -r lzbot
 
 ---
 
+## ❓ Error: "Cannot find module 'dotenv'" (u otro módulo)
+
+Significa que `npm install` no terminó correctamente. Solución:
+
+```bash
+cd ~/Lz-Bot-v0.44/lz-bot
+npm install
+npm start
+```
+
+Si sigue fallando:
+```bash
+cd ~/Lz-Bot-v0.44/lz-bot
+rm -rf node_modules
+npm install --legacy-peer-deps
+npm start
+```
+
+---
+
 ## ❓ Error: "No such file or directory"
 
 Si ves este error al hacer `cd`:
